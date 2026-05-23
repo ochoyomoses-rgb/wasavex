@@ -1,1 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Privacy Policy — WaSavex: Status Saver</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    :root {
+      --bg:        #0b0f14;
+      --surface:   #111820;
+      --border:    #1e2d3d;
+      --accent:    #25d366;
+      --accent2:   #128c7e;
+      --accent3:   #075e54;
+      --text:      #e8f0f5;
+      --muted:     #7a9bb5;
+      --chip-bg:   #0d1f2d;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      line-height: 1.75;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── Noise overlay ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── Glowing orb background ── */
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(90px);
+      opacity: 0.18;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .orb-1 { width: 500px; height: 500px; background: var(--accent); top: -150px; right: -150px; }
+    .orb-2 { width: 400px; height: 400px; background: var(--accent2); bottom: 10%; left: -120px; }
+
+    /* ── Layout ── */
+    .wrapper {
+      position: relative;
+      z-index: 1;
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+
+    /* ── Header ── */
+    header {
+      padding: 60px 0 48px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 20px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 56px;
+      animation: fadeUp 0.7s ease both;
+    }
+
+    .logo-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .logo-icon {
+      width: 52px; height: 52px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px;
+      box-shadow: 0 0 24px rgba(37,211,102,0.35);
+    }
+
+    .app-name {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.6rem;
+      letter-spacing: -0.02em;
+    }
+
+    .app-name span { color: var(--accent); }
+
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2rem, 5vw, 3rem);
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      color: var(--text);
+    }
+
+    h1 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .chip {
+      background: var(--chip-bg);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 4px 14px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+
+    /* ── TOC ── */
+    .toc {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: 12px;
+      padding: 24px 28px;
+      margin-bottom: 56px;
+      animation: fadeUp 0.7s 0.15s ease both;
+    }
+
+    .toc-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      margin-bottom: 14px;
+    }
+
+    .toc ol {
+      list-style: none;
+      counter-reset: toc;
+      display: grid;
+      gap: 6px;
+    }
+
+    .toc li { counter-increment: toc; }
+
+    .toc a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      transition: color 0.2s;
+    }
+
+    .toc a::before {
+      content: counter(toc, decimal-leading-zero);
+      font-family: 'Syne', sans-serif;
+      font-size: 0.7rem;
+      color: var(--accent3);
+      min-width: 22px;
+    }
+
+    .toc a:hover { color: var(--text); }
+
+    /* ── Sections ── */
+    .section {
+      margin-bottom: 52px;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .section:nth-child(1)  { animation-delay: 0.05s; }
+    .section:nth-child(2)  { animation-delay: 0.10s; }
+    .section:nth-child(3)  { animation-delay: 0.15s; }
+    .section:nth-child(4)  { animation-delay: 0.20s; }
+    .section:nth-child(5)  { animation-delay: 0.25s; }
+    .section:nth-child(6)  { animation-delay: 0.30s; }
+    .section:nth-child(7)  { animation-delay: 0.35s; }
+    .section:nth-child(8)  { animation-delay: 0.40s; }
+    .section:nth-child(9)  { animation-delay: 0.45s; }
+    .section:nth-child(10) { animation-delay: 0.50s; }
+
+    .section-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+
+    h2 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1.35rem;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    p { color: var(--muted); margin-bottom: 14px; }
+    p:last-child { margin-bottom: 0; }
+
+    strong { color: var(--text); font-weight: 500; }
+
+    ul {
+      list-style: none;
+      display: grid;
+      gap: 10px;
+      margin: 14px 0;
+    }
+
+    ul li {
+      color: var(--muted);
+      padding-left: 20px;
+      position: relative;
+    }
+
+    ul li::before {
+      content: '▸';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-size: 0.75rem;
+      top: 3px;
+    }
+
+    /* ── Highlight box ── */
+    .highlight-box {
+      background: linear-gradient(135deg, rgba(37,211,102,0.06), rgba(18,140,126,0.04));
+      border: 1px solid rgba(37,211,102,0.2);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin: 20px 0;
+    }
+
+    .highlight-box p { color: var(--text); font-size: 0.95rem; }
+
+    /* ── Contact card ── */
+    .contact-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px 32px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .contact-icon {
+      width: 48px; height: 48px; flex-shrink: 0;
+      background: linear-gradient(135deg, var(--accent2), var(--accent3));
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px;
+    }
+
+    .contact-label { font-size: 0.8rem; color: var(--muted); margin-bottom: 4px; }
+    .contact-email {
+      color: var(--accent);
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      text-decoration: none;
+      word-break: break-all;
+    }
+    .contact-email:hover { text-decoration: underline; }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding-top: 36px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    footer .brand {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    /* ── Animation ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 540px) {
+      .contact-card { flex-direction: column; align-items: flex-start; }
+      h1 { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+
+  <div class="wrapper">
+
+    <!-- Header -->
+    <header>
+      <div class="logo-row">
+        <div class="logo-icon">💾</div>
+        <div class="app-name">Wa<span>Savex</span></div>
+      </div>
+      <h1>Privacy <em>Policy</em></h1>
+      <div class="meta-row">
+        <span class="chip">Status Saver</span>
+        <span class="chip">Effective: May 5, 2025</span>
+        <span class="chip">Last updated: May 5, 2025</span>
+      </div>
+    </header>
+
+    <!-- Intro highlight -->
+    <div class="highlight-box" style="margin-bottom:56px; animation: fadeUp 0.7s 0.1s ease both;">
+      <p>At <strong>WaSavex: Status Saver</strong>, your privacy is our priority. This policy explains clearly and honestly what data we collect, how we use it, and the choices you have. We designed WaSavex to work for <em>you</em> — not to harvest your information.</p>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="toc">
+      <div class="toc-title">Contents</div>
+      <ol>
+        <li><a href="#s1">Information We Collect</a></li>
+        <li><a href="#s2">How We Use Your Information</a></li>
+        <li><a href="#s3">Storage of Media Files</a></li>
+        <li><a href="#s4">Third-Party Services</a></li>
+        <li><a href="#s5">Advertising</a></li>
+        <li><a href="#s6">Children's Privacy</a></li>
+        <li><a href="#s7">Data Security</a></li>
+        <li><a href="#s8">Your Rights & Choices</a></li>
+        <li><a href="#s9">Changes to This Policy</a></li>
+        <li><a href="#s10">Contact Us</a></li>
+      </ol>
+    </div>
+
+    <!-- Sections -->
+    <section class="section" id="s1">
+      <div class="section-num">01</div>
+      <h2>Information We Collect</h2>
+      <p>WaSavex is built with a privacy-first approach. We collect only the minimum information necessary to operate the app effectively.</p>
+      <ul>
+        <li><strong>Device storage access:</strong> The app requests permission to read your device's external storage in order to detect and display status media shared by your contacts. This content is accessed locally on your device and is never uploaded to our servers.</li>
+        <li><strong>Device information:</strong> We may collect non-personal technical data such as your device model, operating system version, and app version to help us diagnose issues and improve performance.</li>
+        <li><strong>Usage data:</strong> Anonymous analytics data (e.g., features used, crash reports) may be collected to understand how users interact with the app. This data does not personally identify you.</li>
+      </ul>
+      <p>We do <strong>not</strong> collect your name, email address, phone number, contacts list, or the content of your messages.</p>
+    </section>
+
+    <section class="section" id="s2">
+      <div class="section-num">02</div>
+      <h2>How We Use Your Information</h2>
+      <p>Any information we collect is used solely for the following purposes:</p>
+      <ul>
+        <li>To provide the core functionality of viewing and saving status media to your device</li>
+        <li>To improve app performance, fix bugs, and enhance user experience</li>
+        <li>To display relevant advertisements (see Section 5)</li>
+        <li>To comply with applicable legal obligations</li>
+      </ul>
+      <p>We do <strong>not</strong> sell, rent, or trade your personal information to any third party for marketing purposes.</p>
+    </section>
+
+    <section class="section" id="s3">
+      <div class="section-num">03</div>
+      <h2>Storage of Media Files</h2>
+      <p>WaSavex allows you to save status photos and videos directly to your device's local storage. <strong>All saved media remains entirely on your device</strong> — we do not upload, back up, or transmit any media files to external servers.</p>
+      <p>You are solely responsible for how you use the media you save. Please respect the intellectual property and privacy of others when saving and sharing content.</p>
+    </section>
+
+    <section class="section" id="s4">
+      <div class="section-num">04</div>
+      <h2>Third-Party Services</h2>
+      <p>WaSavex may integrate third-party services to support app functionality and analytics. These services operate under their own privacy policies and may collect data according to their respective terms.</p>
+      <ul>
+        <li><strong>Google Play Services</strong> — for app distribution and crash reporting</li>
+        <li><strong>Firebase / Google Analytics for Firebase</strong> — for anonymous usage analytics</li>
+        <li><strong>AdMob (Google)</strong> — for serving in-app advertisements</li>
+      </ul>
+      <p>We encourage you to review the privacy policies of these third-party providers. We are not responsible for the data practices of external services.</p>
+    </section>
+
+    <section class="section" id="s5">
+      <div class="section-num">05</div>
+      <h2>Advertising</h2>
+      <p>WaSavex is a free app supported by advertising. Our advertising partner (Google AdMob) may use certain device identifiers and usage data to deliver personalised or contextual ads.</p>
+      <ul>
+        <li>Ads shown within the app are governed by Google's advertising policies</li>
+        <li>You can opt out of personalised ads through your device's settings under <strong>Privacy → Ads</strong></li>
+        <li>We do not share personal data directly with advertisers</li>
+      </ul>
+    </section>
+
+    <section class="section" id="s6">
+      <div class="section-num">06</div>
+      <h2>Children's Privacy</h2>
+      <p>WaSavex is not directed at children under the age of 13. We do not knowingly collect personal information from children. If you believe a child has provided us with personal information, please contact us immediately at the address below and we will take steps to delete such information promptly.</p>
+    </section>
+
+    <section class="section" id="s7">
+      <div class="section-num">07</div>
+      <h2>Data Security</h2>
+      <p>We take reasonable technical and organisational measures to protect any information processed by WaSavex. Since the app primarily operates locally on your device and does not transmit media or personal content to external servers, the risk of a data breach involving your media files is minimal.</p>
+      <p>However, no method of electronic storage or transmission is 100% secure. We encourage you to keep your device's operating system and apps up to date to benefit from the latest security protections.</p>
+    </section>
+
+    <section class="section" id="s8">
+      <div class="section-num">08</div>
+      <h2>Your Rights & Choices</h2>
+      <p>You have control over the data associated with your use of WaSavex:</p>
+      <ul>
+        <li><strong>Storage permissions:</strong> You can revoke storage permissions at any time through your device settings, though this will prevent the app from functioning</li>
+        <li><strong>Ad personalisation:</strong> Opt out of interest-based ads via your device's privacy/ad settings</li>
+        <li><strong>Uninstall:</strong> Uninstalling WaSavex removes all app data from your device (saved media in your gallery is not affected)</li>
+        <li><strong>Data requests:</strong> For any questions about your data, contact us at the email address below</li>
+      </ul>
+    </section>
+
+    <section class="section" id="s9">
+      <div class="section-num">09</div>
+      <h2>Changes to This Policy</h2>
+      <p>We may update this Privacy Policy from time to time to reflect changes in our practices, app features, or applicable laws. When we make significant changes, we will notify you through an in-app notification or by updating the "Last updated" date at the top of this page.</p>
+      <p>We encourage you to review this policy periodically. Your continued use of WaSavex after changes are posted constitutes your acceptance of the revised policy.</p>
+    </section>
+
+    <section class="section" id="s10">
+      <div class="section-num">10</div>
+      <h2>Contact Us</h2>
+      <p>If you have any questions, concerns, or requests regarding this Privacy Policy or your data, please don't hesitate to reach out. We aim to respond within 72 hours.</p>
+      <div class="contact-card">
+        <div class="contact-icon">✉️</div>
+        <div>
+          <div class="contact-label">Email us at</div>
+          <a class="contact-email" href="mailto:ochoyomoses@gmail.com">ochoyomoses@gmail.com</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <p>© 2025 <span class="brand">WaSavex: Status Saver</span>. All rights reserved.</p>
+      <p style="margin-top:8px;">This privacy policy was last reviewed on May 5, 2025.</p>
+    </footer>
+
+  </div>
+</body>
+</html>
